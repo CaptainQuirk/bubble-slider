@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link type="text/css" rel="stylesheet" href="assets/css/main.css"/>
+        <link type="text/css" rel="stylesheet" href="assets/css/bubble-slider.css"/>
+        <script type="text/javascript" src="vendor/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="assets/js/bubble-slider.jquery.js"></script>
+    </head>
+    <body>
+        <h1>Mon slider</h1>
+        <div class="slider">
+            <div class="left-content">
+                <div class="content-info">
+                    <h1>Titre</h1>
+                    <p>
+                        Superatis Tauri montis verticibus qui ad solis ortum
+                        sublimius attolluntur, Cilicia spatiis porrigitur late
+                        distentis dives bonis omnibus terra, eiusque lateri
+                        dextro adnexa Isauria, pari sorte uberi palmite viget et
+                        frugibus minutis, quam mediam navigabile flumen
+                        Calycadnus interscindit.
+                    </p>
+                    <a href="#" class="btn">Lire d'avantage</a>
+                </div>
+            </div>
+            <div class="right-content">
+                <div class="bubble-slider">
+                    <div class="bubble">
+                        Test 1
+                        <div class="bubble-content">
+                            <h1>Titre 1</h1>
+                            <p>
+                                Superatis Tauri montis verticibus qui ad solis ortum
+                                sublimius attolluntur, Cilicia spatiis porrigitur late
+                                distentis dives.
+                            </p>
+                            <a href="#" class="btn">Lire d'avantage</a>
+                        </div>
+                    </div>
+                    <div class="bubble">
+                        Test 2
+                        <div class="bubble-content">
+                            <h1>Titre 2</h1>
+                            <p>
+                                Post quorum necem nihilo lenius ferociens Gallus
+                                ut leo cadaveribus pastus multa huius modi
+                                scrutabatur. quae singula narrare non refert, me
+                                professione..
+                            </p>
+                            <a href="#" class="btn">Lire d'avantage</a>
+                        </div>
+                    </div>
+                    <div class="bubble">
+                        Test 3
+                        <div class="bubble-content">
+                            <h1>Titre 3</h1>
+                            <p>
+                                Et interdum acciderat, ut siquid in penetrali
+                                secreto nullo citerioris vitae ministro
+                                praesente paterfamilias uxori susurrasset in
+                                aurem, velut Amphiarao referente aut Marcio,
+                                quondam vatibus inclitis.
+                            </p>
+                            <a href="#" class="btn">Lire d'avantage</a>
+                        </div>
+                    </div>
+                    <div class="bubble">
+                        Test 4
+                        <div class="bubble-content">
+                            <h1>Titre 4</h1>
+                            <p>
+                                Cum autem commodis intervallata temporibus
+                                convivia longa et noxia coeperint apparari vel
+                                distributio sollemnium sportularum.
+                            </p>
+                            <a href="#" class="btn">Lire d'avantage</a>
+                        </div>
+                    </div>
+                    <div class="bubble">
+                        Test 5
+                        <div class="bubble-content">
+                            <h1>Titre 5</h1>
+                            <p>
+                                Et prima post Osdroenam quam, ut dictum est,
+                                ab hac descriptione discrevimus, Commagena,
+                                nunc Euphratensis, clementer adsurgit.
+                            </p>
+                            <a href="#" class="btn">Lire d'avantage</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $('.bubble-slider').bubbleslider({
+                initialisation: function ($slider) {
+                    var totalBubble = 0;
+                    var totalBubbleWidth = 0;
+                    
+                    $slider.find('.bubble').each(function (i, bubble) {
+                        totalBubble++;
+                        totalBubbleWidth += $(bubble).width();
+                    });
+                    
+                    var total = ((($slider.width() - totalBubbleWidth) / totalBubble) / 2) + $slider.find('.bubble').width() / 2;
+                    
+                    $slider.css('width', '+=' + total + 'px');
+                },
+                clickedBubbleAfterAnimationCallback: function ($bubble) {
+                    $bubble.closest('.slider').find('.content-info').empty();
+                    $bubble.closest('.slider').find('.content-info').html($bubble.find('.bubble-content').html());
+                }
+            });
+        </script>
+    </body>
+</html>

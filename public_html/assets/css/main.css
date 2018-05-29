@@ -1,0 +1,40 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 28 mai 2018, 18:05:34
+    Author     : gjean
+*/
+
+.slider {
+    position: relative;
+    height: 200px;
+    width: 100%;
+    display: flex;
+}
+
+.slider .left-content, .slider .right-content {
+    height: 100%;
+    width: 50%;
+}
+
+.slider .left-content {
+    left: 0;
+    background-color: #2980b9;
+}
+
+.slider .right-content {
+    right: 0;
+    background-color: #bdc3c7;
+}
+
+.slider .left-content .content-info {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 40%;
+    padding: 1em;
+}

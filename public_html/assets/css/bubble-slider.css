@@ -1,0 +1,32 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 29 mai 2018, 14:34:42
+    Author     : gjean
+*/
+
+.bubble-slider {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    right: 0;
+}
+
+.bubble-slider .bubble {
+    margin: auto;
+    line-height: 200px;
+    display: inline-block;
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    line-height: 100px;
+    text-align: center;
+    background-color: #ecf0f1;
+}
+
+.bubble-slider .bubble .bubble-content {
+    display: none;
+}
