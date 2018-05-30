@@ -8,30 +8,40 @@
         $.fn.bubbleslider.settings = $.extend($.fn.bubbleslider.defaults, options);
 
         return this.each(function (i, slider) {
-            
-            console.log(Math.sin(0 * (Math.PI/180)));
-            console.log(Math.sin(90 * (Math.PI/180)));
-            console.log(Math.sin(360));
-            
+
             $.fn.bubbleslider.initialisation($(slider));
             $.fn.bubbleslider.settings.initialisation($(slider));
             
             $(slider).on("click", ".bubble", function () {
-                var $clickedBubble = $(this);
-                var $firstBubble = $(slider).find('.bubble.active');
-                
-                var clickedBubblePosition = $clickedBubble.position();
-                var firstBubblePosition = $firstBubble.position();
-                
-                $.fn.bubbleslider.moveToPosition($(slider), $clickedBubble, firstBubblePosition, function () {
-                    $clickedBubble.addClass('active');
-                    $.fn.bubbleslider.settings.clickedBubbleAfterAnimationCallback($clickedBubble);
-                }, true);
-                
-                $.fn.bubbleslider.moveToPosition($(slider), $firstBubble, clickedBubblePosition, function () {
-                    $firstBubble.removeClass("active");
-                    $.fn.bubbleslider.settings.firstBubbleAfterAnimationCallback($firstBubble);
-                }, false);
+                if (!$(slider).hasClass('in-progress')) {
+                    
+                    $(slider).addClass('in-progress');
+                    
+                    $.fn.bubbleslider.settings.beforeAnimation($(slider));
+
+                    var $clickedBubble = $(this);
+                    var $firstBubble = $(slider).find('.bubble.active');
+
+                    var clickedBubbleNumber = $(this).attr('bubble-position');
+
+                    var clickedBubblePosition = $clickedBubble.position();
+                    var firstBubblePosition = $firstBubble.position();
+
+                    $.fn.bubbleslider.moveToPosition($(slider), $clickedBubble, firstBubblePosition, clickedBubbleNumber, function () {
+                        $clickedBubble.addClass('active');
+                        $clickedBubble.attr('bubble-position', 1);
+                        $.fn.bubbleslider.settings.clickedBubbleAfterAnimationCallback($clickedBubble);
+                        $(slider).removeClass('in-progress');
+                    }, true);
+
+                    $.fn.bubbleslider.moveToPosition($(slider), $firstBubble, clickedBubblePosition, clickedBubbleNumber, function () {
+                        $firstBubble.removeClass("active");
+                        $firstBubble.attr("bubble-position", clickedBubbleNumber);
+                        $.fn.bubbleslider.settings.firstBubbleAfterAnimationCallback($firstBubble);
+                        $(slider).removeClass('in-progress');
+                    }, false);
+                }
+                    
             });
         });
     };
@@ -40,14 +50,18 @@
      * 
      */
     $.fn.bubbleslider.defaults = {
+        duration: 500,
         initialisation: function ($slider) {
-            console.log($slider);
+            
+        },
+        beforeAnimation: function ($slider) {
+            
         },
         firstBubbleAfterAnimationCallback: function ($bubble) {
-            console.log($bubble);
+            
         },
         clickedBubbleAfterAnimationCallback: function ($bubble) {
-            console.log($bubble);
+            
         }
     }
     
@@ -62,6 +76,7 @@
         $slider.css('position', 'absolute');
         
         $slider.find('.bubble').each(function (i, bubble) {
+            $(bubble).attr('bubble-position', i);
             $(bubble).css({
                 top: $(bubble).offset().top - $slider.offset().top,
                 left: $(bubble).offset().left - $slider.offset().left
@@ -82,21 +97,34 @@
      * @param {type} $position
      * @returns {undefined}
      */
-    $.fn.bubbleslider.moveToPosition = function ($slider, $element, position, callback, debug) {
+    $.fn.bubbleslider.moveToPosition = function ($slider, $element, position, number, callback, up) {
+
+        number = Math.pow(((number*2) - 1) / number, 1.5);
+        
+        console.log(number);
+        
+        var baseTop = $element.css('top');
+        
         $element.animate({
             top: position.top,
             left: position.left
         }, {
-            duration: 1000,
-            complete: callback,
-            step: function (p, fx) {
-                if (debug && fx.prop === 'top') {
-                    s = Math.sin(p);
-                    y = s * 100 + 150;
-                    console.log(s);
-                }
+            duration: $.fn.bubbleslider.settings.duration,
+            progress: function(animation, progress) {
+                up
+                    ? $element.css('top', '-=' + $.fn.bubbleslider.computeSin(progress, 75 * number))
+                    : $element.css('top', '+=' + $.fn.bubbleslider.computeSin(progress, 75 * number));
+            },
+            complete: function () {
+                $element.css('top', baseTop);
+                callback();
             }
         });
+    }
+    
+    $.fn.bubbleslider.computeSin = function (value, multiplicateur) {
+        var deg = Math.round(((180 * (value*100)) / 100) * 100) / 100;
+        return (Math.sin((deg * Math.PI) / 180) * multiplicateur);
     }
 
 }(jQuery));

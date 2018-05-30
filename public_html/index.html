@@ -114,8 +114,12 @@ and open the template in the editor.
                     
                     $slider.css('width', '+=' + total + 'px');
                 },
+                beforeAnimation: function ($slider) {
+                    $slider.closest('.slider').find('.content-info').fadeOut();
+                },
                 clickedBubbleAfterAnimationCallback: function ($bubble) {
                     $bubble.closest('.slider').find('.content-info').empty();
+                    $bubble.closest('.slider').find('.content-info').fadeIn();
                     $bubble.closest('.slider').find('.content-info').html($bubble.find('.bubble-content').html());
                 }
             });
