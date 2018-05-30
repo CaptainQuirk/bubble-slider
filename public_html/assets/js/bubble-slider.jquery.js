@@ -13,7 +13,7 @@
             $.fn.bubbleslider.settings.initialisation($(slider));
             
             $(slider).on("click", ".bubble", function () {
-                if (!$(slider).hasClass('in-progress')) {
+                if (!$(slider).hasClass('in-progress') && !$(this).hasClass('active')) {
                     
                     $(slider).addClass('in-progress');
                     
