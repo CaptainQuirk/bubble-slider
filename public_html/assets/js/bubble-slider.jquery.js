@@ -1,6 +1,4 @@
 
-
-
 (function ($) {
 
     $.fn.bubbleslider = function (options) {
